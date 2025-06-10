@@ -90,3 +90,112 @@ npm run start:dev
 ```
 
 The application will be running on `http://localhost:3000`.
+
+## Testing
+
+The application includes both unit tests and integration (e2e) tests. The test suite is configured to use a separate test database to ensure your development data remains intact.
+
+### Testing Technologies
+
+- **Jest**: Primary testing framework for both unit and integration tests
+- **Supertest**: HTTP assertion library for API endpoint testing
+- **TypeORM Testing**: Database testing utilities for TypeORM entities
+- **Test Doubles**: Mocks, stubs, and spies for isolating components
+
+### 1. Set Up Test Environment
+
+Ensure you have a test database configuration by creating a `.env.test` file in the `backend` directory:
+
+```bash
+cp backend/.env.example backend/.env.test
+```
+
+Update the `.env.test` file to use a different database name (e.g., `goal_tracker_test_db`). The test database should be separate from your development database.
+
+### 2. Running Unit Tests
+
+Unit tests verify individual components in isolation, using mocks for external dependencies. These are the standard tests that run during regular development cycles.
+
+```bash
+cd backend
+npm run test
+```
+
+This command runs **ONLY the unit tests** (`.spec.ts` files) in the project. It does **NOT** run the e2e tests.
+
+Additional unit test commands:
+
+```bash
+# Watch for changes and automatically re-run unit tests
+npm run test:watch
+
+# Generate a test coverage report for unit tests
+npm run test:cov
+```
+
+### 3. Running End-to-End (E2E) Tests
+
+E2E tests verify the entire application stack, including real database interactions. **These tests are completely separate from unit tests** and require additional setup.
+
+**Important:**
+- E2E tests are NOT run with the regular `npm run test` command
+- E2E tests require a separate test database
+- E2E tests will reset the test database on each run
+
+#### a. Set up the Test Database
+
+Before running E2E tests, you **MUST** create a separate test database:
+
+**Option 1: Using psql directly** (if PostgreSQL is installed locally):
+
+```bash
+# Start PostgreSQL client
+psql -U postgres
+
+# Create the test database
+CREATE DATABASE goal_tracker_test_db;
+
+# Verify it was created
+\l
+
+# Exit PostgreSQL client
+\q
+```
+
+**Option 2: Using Docker** (if using the Docker setup):
+
+```bash
+# Execute PostgreSQL command in Docker container
+docker exec -it goal-tracker-postgres bash -c "psql -U goaltracker_dev_user goal_tracker_dev_db -c 'CREATE DATABASE goal_tracker_test_db;'"
+```
+
+#### b. Configure the Test Environment
+
+Make sure your `.env.test` file points to the test database:
+
+```
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=your_database_user  # Use the same as in root .env file
+DATABASE_PASSWORD=your_database_password  # Use the same as in root .env file
+DATABASE_NAME=goal_tracker_test_db  # This should be your test database
+```
+
+#### c. Run the E2E Tests
+
+E2E tests must be run with a dedicated command:
+
+```bash
+cd backend
+npm run test:e2e
+```
+
+### Testing Architecture
+
+The testing architecture is structured as follows:
+
+- **Unit tests** (`.spec.ts` files): Located alongside the files they test in the `src` directory
+- **Integration tests** (`.e2e-spec.ts` files): Located in the `test` directory
+- **Test utilities**: Located in the `test` directory to support test setup and teardown
+
+The test database is automatically set up and torn down during the integration test process.

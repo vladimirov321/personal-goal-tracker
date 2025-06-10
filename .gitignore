@@ -9,10 +9,12 @@ frontend/dist/
 # Environment files
 /.env
 backend/.env
+backend/.env.test
 
 # IMPORTANT: Explicitly un-ignore .env.example files
 !/.env.example
 !backend/.env.example
+!backend/.env.test.example
 
 # IDE and OS files
 .DS_Store
@@ -22,3 +24,11 @@ Thumbs.db
 
 # Ignore frontend build artifacts (if any)
 frontend/build/
+
+# Ignore all coverage reports
+overage/
+**/coverage/
+*.lcov
+*.lcov.info
+.nyc_output/
+coverage-final.json

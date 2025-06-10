@@ -1,11 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
-
-export enum GoalStatus {
-  TODO = 'To Do',
-  IN_PROGRESS = 'In Progress',
-  COMPLETED = 'Completed',
-  ON_HOLD = 'On Hold'
-}
+import { GoalStatus } from '../enums/goal-status.enum';
 
 @Entity('goals')
 export class Goal {

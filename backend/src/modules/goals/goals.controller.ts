@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, Request } from '@nestjs/common';
 import { GoalsService } from './goals.service';
-import { Goal, GoalStatus } from './entities/goal.entity';
+import { Goal } from './entities/goal.entity';
+import { GoalStatus } from './enums/goal-status.enum';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('goals')
