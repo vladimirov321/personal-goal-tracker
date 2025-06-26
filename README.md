@@ -32,7 +32,7 @@ A full-stack application designed for users to manage and track their personal g
 *   **Library:** React JS
 *   **State Management:** React Context API / Local State (Redux can be added if complexity grows)
 *   **Routing:** React Router
-*   **HTTP Client:** Axios (or Fetch API)
+*   **HTTP Client:** Axios
 *   **Styling:** Tailwind CSS
 
 ## Prerequisites
