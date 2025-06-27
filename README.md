@@ -1,6 +1,6 @@
 # Personal Goal Tracker
 
-A full-stack application designed for users to manage and track their personal goals. Built with NestJS for the backend API, PostgreSQL for data storage, and React for the frontend.
+A full-stack application designed for users to manage and track their personal goals. Built with NestJS for the backend API, PostgreSQL for data storage, and React/TypeScript for the frontend.
 
 ## Features
 
@@ -30,10 +30,16 @@ A full-stack application designed for users to manage and track their personal g
 **Frontend:**
 
 *   **Library:** React JS
+*   **Language:** TypeScript
 *   **State Management:** React Context API / Local State (Redux can be added if complexity grows)
 *   **Routing:** React Router
-*   **HTTP Client:** Axios
+*   **HTTP Client:** Axios with custom interceptors for authentication
 *   **Styling:** Tailwind CSS
+*   **Testing:** Jest and React Testing Library
+*   **Frontend Services:**
+    * `apiClient` - Wrapper for Axios with auth token management and refresh capability
+    * `goalService` - Service for goal-related CRUD operations
+    * `authService` - Authentication service for login, register, and user management
 
 ## Prerequisites
 
@@ -199,3 +205,21 @@ The testing architecture is structured as follows:
 - **Test utilities**: Located in the `test` directory to support test setup and teardown
 
 The test database is automatically set up and torn down during the integration test process.
+
+### 4. Frontend Testing
+
+The frontend uses Jest and React Testing Library for testing components and services.
+
+```bash
+# Navigate to the frontend directory
+cd frontend
+
+# Run tests
+npm test
+```
+
+#### Frontend Test Structure
+
+- **Service Tests**: Located in `src/services/__tests__/` directory to test the API client and service methods
+- **Testing Setup**: `setupTests.js` provides mock implementations for browser APIs like localStorage
+- **Babel Configuration**: The project includes babel.config.js to properly support TypeScript and React in tests
