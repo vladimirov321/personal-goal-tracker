@@ -29,6 +29,7 @@ services:
   backend:
     build: ./backend
     container_name: goal-tracker-backend
+    command: npm run start:dev
     ports:
       - "3000:3000"
     depends_on:

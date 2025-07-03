@@ -3,7 +3,7 @@ import apiClient from './apiClient';
 export interface User {
   id: string;
   email: string;
-  name: string;
+  username: string;
   createdAt: string;
 }
 
@@ -21,7 +21,7 @@ export interface LoginPayload {
 export interface RegisterPayload {
   email: string;
   password: string;
-  name: string;
+  username: string;
 }
 
 class AuthService {

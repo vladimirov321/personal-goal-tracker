@@ -18,7 +18,7 @@ describe('AuthService', () => {
   const mockUser: User = {
     id: '1',
     email: 'test@example.com',
-    name: 'Test User',
+    username: 'Test User',
     createdAt: '2023-01-01T00:00:00Z'
   };
 
@@ -66,7 +66,7 @@ describe('AuthService', () => {
   describe('register', () => {
     test('should call apiClient.post with user data and set auth tokens', async () => {
       const registerPayload: RegisterPayload = {
-        name: 'Test User',
+        username: 'Test User',
         email: 'test@example.com',
         password: 'password123'
       };
@@ -84,7 +84,7 @@ describe('AuthService', () => {
 
     test('should throw error if registration fails', async () => {
       const registerPayload: RegisterPayload = {
-        name: 'Test User',
+        username: 'Test User',
         email: 'existing@example.com',
         password: 'password123'
       };
