@@ -32,13 +32,23 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     try {
       await authService.register(formData);
       
-      if (onSuccess) {
-        onSuccess();
+      if (authService.isLoggedIn()) {
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          navigate('/dashboard', { replace: true });
+        }
       } else {
-        navigate('/dashboard'); // Navigate to dashboard after successful registration
+        setError('Registration successful but login failed. Please try logging in.');
       }
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Please try again.');
+      if (err.status === 409) {
+        setError('A user with this email already exists. Please try logging in.');
+      } else if (err.status === 400) {
+        setError('Invalid registration data. Please check your information.');
+      } else {
+        setError(err.message || 'Registration failed. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }

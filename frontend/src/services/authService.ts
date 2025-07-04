@@ -59,6 +59,10 @@ class AuthService {
   isLoggedIn(): boolean {
     return apiClient.isAuthenticated();
   }
+  
+  clearAuthTokens(): void {
+    apiClient.clearAuthTokens();
+  }
 }
 
 const authService = new AuthService();

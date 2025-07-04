@@ -1,8 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RegisterForm } from '../components/auth';
 
 const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
+  
+  const handleRegistrationSuccess = () => {
+    navigate('/dashboard', { 
+      replace: true, 
+      state: { fromRegistration: true }
+    });
+  };
+  
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -19,7 +28,7 @@ const RegisterPage: React.FC = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <RegisterForm />
+          <RegisterForm onSuccess={handleRegistrationSuccess} />
           
           <div className="mt-6">
             <div className="relative">
