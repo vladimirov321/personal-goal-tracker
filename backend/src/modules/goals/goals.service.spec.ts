@@ -5,6 +5,7 @@ import { Goal } from './entities/goal.entity';
 import { Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { GoalStatus } from './enums/goal-status.enum';
+import { GoalCategory } from './enums/goal-category.enum';
 
 // Mock types for TypeORM repository
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
@@ -45,8 +46,8 @@ describe('GoalsService', () => {
   describe('findAll', () => {
     it('should return an array of goals', async () => {
       const mockGoals = [
-        { id: '1', title: 'Goal 1', description: '', status: GoalStatus.TODO, userId: 'user1', user: null, createdAt: new Date(), updatedAt: new Date() },
-        { id: '2', title: 'Goal 2', description: '', status: GoalStatus.IN_PROGRESS, userId: 'user1', user: null, createdAt: new Date(), updatedAt: new Date() },
+        { id: '1', title: 'Goal 1', description: '', status: GoalStatus.TODO, category: GoalCategory.PERSONAL, targetDate: new Date(), progress: 0, userId: 'user1', user: null, createdAt: new Date(), updatedAt: new Date() },
+        { id: '2', title: 'Goal 2', description: '', status: GoalStatus.IN_PROGRESS, category: GoalCategory.WORK, targetDate: new Date(), progress: 50, userId: 'user1', user: null, createdAt: new Date(), updatedAt: new Date() },
       ];
       goalRepository.find.mockResolvedValue(mockGoals);
 
@@ -60,8 +61,8 @@ describe('GoalsService', () => {
     it('should return goals for a specific user', async () => {
       const userId = 'user1';
       const mockGoals = [
-        { id: '1', title: 'Goal 1', description: '', status: GoalStatus.TODO, userId, user: null, createdAt: new Date(), updatedAt: new Date() },
-        { id: '2', title: 'Goal 2', description: '', status: GoalStatus.IN_PROGRESS, userId, user: null, createdAt: new Date(), updatedAt: new Date() },
+        { id: '1', title: 'Goal 1', description: '', status: GoalStatus.TODO, category: GoalCategory.PERSONAL, targetDate: new Date(), progress: 0, userId, user: null, createdAt: new Date(), updatedAt: new Date() },
+        { id: '2', title: 'Goal 2', description: '', status: GoalStatus.IN_PROGRESS, category: GoalCategory.WORK, targetDate: new Date(), progress: 50, userId, user: null, createdAt: new Date(), updatedAt: new Date() },
       ];
       goalRepository.find.mockResolvedValue(mockGoals);
 
@@ -163,6 +164,9 @@ describe('GoalsService', () => {
         title: 'Old Title',
         description: 'Old description',
         status: GoalStatus.TODO,
+        category: GoalCategory.PERSONAL,
+        targetDate: new Date(),
+        progress: 0,
         userId,
         user: null,
         createdAt: new Date(),
@@ -193,9 +197,12 @@ describe('GoalsService', () => {
       
       const existingGoal = {
         id: goalId,
-        title: 'Test Goal',
+        title: 'Goal to cancel',
         description: '',
         status: GoalStatus.IN_PROGRESS,
+        category: GoalCategory.PERSONAL,
+        targetDate: new Date(),
+        progress: 50,
         userId,
         user: null,
         createdAt: new Date(),
@@ -227,6 +234,9 @@ describe('GoalsService', () => {
         title: 'Goal to be put on hold',
         description: '',
         status: GoalStatus.IN_PROGRESS,
+        category: GoalCategory.PERSONAL,
+        targetDate: new Date(),
+        progress: 50,
         userId,
         user: null,
         createdAt: new Date(),
@@ -259,6 +269,9 @@ describe('GoalsService', () => {
         title: 'Test Goal',
         description: '',
         status: GoalStatus.TODO,
+        category: GoalCategory.PERSONAL,
+        targetDate: new Date(),
+        progress: 0,
         userId,
         user: null,
         createdAt: new Date(),

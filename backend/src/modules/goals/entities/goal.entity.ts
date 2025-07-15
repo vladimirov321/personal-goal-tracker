@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { GoalStatus } from '../enums/goal-status.enum';
+import { GoalCategory } from '../enums/goal-category.enum';
 
 @Entity('goals')
 export class Goal {
@@ -11,6 +12,20 @@ export class Goal {
 
   @Column({ nullable: true, type: 'text' })
   description: string;
+
+  @Column({
+    type: 'enum',
+    enum: GoalCategory,
+    default: GoalCategory.PERSONAL,
+    nullable: true
+  })
+  category: GoalCategory;
+
+  @Column({ nullable: true, type: 'date' })
+  targetDate: Date;
+
+  @Column({ default: 0 })
+  progress: number;
 
   @Column({
     type: 'enum',

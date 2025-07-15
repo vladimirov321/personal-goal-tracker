@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LogoutButton } from '../components/auth';
 import authService from '../services/authService';
 import { User } from '../services/authService';
+import { GoalManager } from '../components/goals';
 
 const DashboardPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -65,16 +66,8 @@ const DashboardPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
-            <h2 className="text-2xl font-bold mb-6">Your Goals</h2>
-            <p className="text-gray-600">You don't have any goals yet. Start by adding your first goal!</p>
-            
-            {/* Add goal button/form would go here */}
-            <button 
-              className="mt-4 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Add New Goal
-            </button>
+          <div className="border-4 border-gray-200 rounded-lg p-4 min-h-[24rem]">
+            <GoalManager />
           </div>
         </div>
       </div>

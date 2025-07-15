@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, Request } f
 import { GoalsService } from './goals.service';
 import { Goal } from './entities/goal.entity';
 import { GoalStatus } from './enums/goal-status.enum';
+import { GoalCategory } from './enums/goal-category.enum';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('goals')
@@ -21,7 +22,13 @@ export class GoalsController {
 
   @Post()
   async create(
-    @Body() createGoalDto: { title: string; description?: string },
+    @Body() createGoalDto: { 
+      title: string; 
+      description?: string; 
+      category?: GoalCategory;
+      targetDate?: Date;
+      progress?: number;
+    },
     @Request() req,
   ): Promise<Goal> {
     return await this.goalsService.create({
@@ -51,5 +58,15 @@ export class GoalsController {
   @Delete(':id')
   async remove(@Param('id') id: string, @Request() req): Promise<void> {
     return await this.goalsService.remove(id, req.user.id);
+  }
+
+  @Get('metadata/categories')
+  getCategories() {
+    return Object.values(GoalCategory);
+  }
+
+  @Get('metadata/statuses')
+  getStatuses() {
+    return Object.values(GoalStatus);
   }
 }

@@ -6,7 +6,7 @@ export interface Goal {
   description: string;
   category: string;
   targetDate: string;
-  status: 'not_started' | 'in_progress' | 'completed';
+  status: 'TODO' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED' | 'ON_HOLD';
   progress: number;
   createdAt: string;
   updatedAt: string;
@@ -24,7 +24,7 @@ export interface UpdateGoalPayload {
   description?: string;
   category?: string;
   targetDate?: string;
-  status?: 'not_started' | 'in_progress' | 'completed';
+  status?: 'TODO' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED' | 'ON_HOLD';
   progress?: number;
 }
 
@@ -33,6 +33,14 @@ class GoalService {
 
   async getAllGoals(): Promise<Goal[]> {
     return apiClient.get<Goal[]>(this.basePath);
+  }
+
+  async getCategories(): Promise<string[]> {
+    return apiClient.get<string[]>(`${this.basePath}/metadata/categories`);
+  }
+
+  async getStatuses(): Promise<string[]> {
+    return apiClient.get<string[]>(`${this.basePath}/metadata/statuses`);
   }
 
   async getGoalsByCategory(category: string): Promise<Goal[]> {
